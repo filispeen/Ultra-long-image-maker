@@ -405,11 +405,14 @@
       }
 
       const zipBlob = await jszip.generateAsync({ type: "blob" });
-      const url = URL.createObjectURL(zipBlob);
+      const url2 = URL.createObjectURL(zipBlob);
 
-      resultDiv.innerHTML += `<a href="${url}" download="cropped_parts.zip" class="download-link">Скачать части изображения</a>`;
-      resultDiv.appendChild(finalCanvas);
-
+      finalCanvas.toBlob(blob => {
+        const url = URL.createObjectURL(blob);
+        resultDiv.innerHTML = `<a href="${url}" download="combined.png" class="download-link">Скачать объединённое изображение</a>`;
+        resultDiv.innerHTML += `<a href="${url2}" download="cropped_parts.zip" class="download-link">Скачать части изображения</a>`;
+        resultDiv.appendChild(finalCanvas);
+      });
       updateProgress(100);
     }
 
@@ -486,11 +489,6 @@
         }
 
         updateProgress(55);
-
-        finalCanvas.toBlob(blob => {
-          const url = URL.createObjectURL(blob);
-          resultDiv.innerHTML = `<a href="${url}" download="combined.png" class="download-link">Скачать объединённое изображение</a>`;
-        });
 
         await cropImageTo5Horizontal(finalCanvas, resultDiv);
 
