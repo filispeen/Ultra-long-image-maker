@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -297,17 +297,17 @@
 <body>
   <div class="container">
     <h1>Ultra Long Image Maker</h1>
-    <p class="subtitle">Объедините изображения из ZIP-архива в одну длинную картинку</p>
+    <p class="subtitle">Combine all images in archive to make ultra long image in steam profile</p>
     
     <div class="upload-area" id="uploadArea">
       <div class="upload-icon"></div>
-      <div class="upload-text">Выберите ZIP-файл с изображениями</div>
-      <div class="upload-subtext">Поддерживаются форматы: PNG, JPG, JPEG, WebP</div>
+      <div class="upload-text">Upload ZIP-file with images</div>
+      <div class="upload-subtext">Supported images: PNG, JPG, JPEG, WebP</div>
       <input type="file" id="zipInput" accept=".zip">
     </div>
     
     <button class="button" id="processBtn">
-      <span id="buttonText">Обработать изображения</span>
+      <span id="buttonText">Process images</span>
     </button>
     
     <div class="progress-bar" id="progressBar" style="display: none;">
@@ -352,14 +352,14 @@
       updateButtonState();
       const fileName = e.target.files[0]?.name;
       if (fileName) {
-        document.querySelector('.upload-text').textContent = `Выбран файл: ${fileName}`;
+        document.querySelector('.upload-text').textContent = `Uploaded file: ${fileName}`;
       }
     });
 
     function updateButtonState() {
       if (zipInput.files.length && !isProcessing) {
         processBtn.disabled = false;
-        buttonText.textContent = 'Обработать изображения';
+        buttonText.textContent = 'Process images';
       }
     }
 
@@ -409,8 +409,8 @@
 
       finalCanvas.toBlob(blob => {
         const url = URL.createObjectURL(blob);
-        resultDiv.innerHTML = `<a href="${url}" download="combined.png" class="download-link">Скачать объединённое изображение</a>`;
-        resultDiv.innerHTML += `<a href="${url2}" download="cropped_parts.zip" class="download-link">Скачать части изображения</a>`;
+        resultDiv.innerHTML = `<a href="${url}" download="combined.png" class="download-link">Download combined images</a>`;
+        resultDiv.innerHTML += `<a href="${url2}" download="cropped_parts.zip" class="download-link">Download cropped images</a>`;
         resultDiv.appendChild(finalCanvas);
       });
       updateProgress(100);
@@ -420,7 +420,7 @@
       const jszip = new JSZip();
       isProcessing = true;
       processBtn.disabled = true;
-      buttonText.innerHTML = '<div class="processing"><div class="spinner"></div>Обработка...</div>';
+      buttonText.innerHTML = '<div class="processing"><div class="spinner"></div>Process...</div>';
       progressBar.style.display = 'block';
       resultDiv.innerHTML = '';
 
@@ -437,7 +437,7 @@
         );
 
         if (!imageFiles.length) {
-          throw new Error('В архиве не найдено изображений');
+          throw new Error('No images found in the ZIP file.');
         }
 
         for (let i = 0; i < imageFiles.length; i++) {
@@ -498,7 +498,7 @@
       } finally {
         isProcessing = false;
         processBtn.disabled = false;
-        buttonText.textContent = 'Обработать изображения';
+        buttonText.textContent = 'Process images';
         setTimeout(() => {
           progressBar.style.display = 'none';
           updateProgress(0);
