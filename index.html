@@ -397,9 +397,9 @@
         rctx.imageSmoothingQuality = "high";
         rctx.drawImage(croppedCanvas, 0, 0, targetWidth, targetHeight);
 
-        const blob2 = await new Promise(resolve => resizedCanvas.toBlob(resolve, "image/png"));
+        const blob2 = await new Promise(resolve => resizedCanvas.toBlob(resolve, "image/jpeg", 0.92));
         const arrayBuffer = await blob2.arrayBuffer();
-        jszip.file(`part${i}.png`, arrayBuffer);
+        jszip.file(`part${i}.jpg`, arrayBuffer);
 
         updateProgress(60 + (i / 5) * 30);
       }
